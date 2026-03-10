@@ -1,0 +1,58 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://adlink.uz/sitemap.xml
+
+# Block common crawl delays
+Crawl-delay: 1
+
+# Allow important directories
+Allow: /api/
+Allow: /images/
+Allow: /icons/
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/admin/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow specific file types
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+Allow: *.ico
+
+# SEO optimization for Uzbekistan
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# AI crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /

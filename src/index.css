@@ -1,0 +1,10 @@
+@tailwind base;
+@layer base {
+  @apply bg-background text-foreground;
+}
+@layer components {
+  @import "./components/ui.css";
+}
+@layer utilities {
+  @apply text-foreground;
+}
