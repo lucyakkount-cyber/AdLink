@@ -89,26 +89,46 @@ const EMPTY_DB: JsonDb = {
 }
 
 let mutex: Promise<void> = Promise.resolve()
+let inMemoryDb: JsonDb | null = null
 
 async function ensureFile() {
-  if (existsSync(DB_FILE)) return
-  await mkdir(dirname(DB_FILE), { recursive: true })
-  await writeFile(DB_FILE, JSON.stringify(EMPTY_DB, null, 2), "utf8")
+  try {
+    if (existsSync(DB_FILE)) return
+    await mkdir(dirname(DB_FILE), { recursive: true })
+    await writeFile(DB_FILE, JSON.stringify(EMPTY_DB, null, 2), "utf8")
+  } catch (err) {
+    // Could be running in a read-only serverless environment (Vercel). Fall
+    // back to an in-memory DB to avoid throwing and returning 500 responses.
+    inMemoryDb = structuredClone(EMPTY_DB)
+  }
 }
 
 async function readDb(): Promise<JsonDb> {
   await ensureFile()
-  const text = await readFile(DB_FILE, "utf8")
+  if (inMemoryDb) return inMemoryDb
+
   try {
-    return JSON.parse(text) as JsonDb
-  } catch {
-    return structuredClone(EMPTY_DB)
+    const text = await readFile(DB_FILE, "utf8")
+    try {
+      return JSON.parse(text) as JsonDb
+    } catch {
+      return structuredClone(EMPTY_DB)
+    }
+  } catch (err) {
+    // If reading from disk fails, use in-memory DB as fallback.
+    inMemoryDb = structuredClone(EMPTY_DB)
+    return inMemoryDb
   }
 }
 
 async function writeDb(db: JsonDb) {
-  await mkdir(dirname(DB_FILE), { recursive: true })
-  await writeFile(DB_FILE, JSON.stringify(db, null, 2), "utf8")
+  try {
+    await mkdir(dirname(DB_FILE), { recursive: true })
+    await writeFile(DB_FILE, JSON.stringify(db, null, 2), "utf8")
+  } catch (err) {
+    // Writing to disk may be disallowed in serverless runtimes; keep DB in memory.
+    inMemoryDb = db
+  }
 }
 
 export async function withDb<T>(fn: (db: JsonDb) => T | Promise<T>): Promise<T> {

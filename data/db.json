@@ -1,6 +1,6 @@
 {
   "meta": {
-    "nextUserId": 16,
+    "nextUserId": 17,
     "nextCampaignId": 1
   },
   "users": [
@@ -17,6 +17,13 @@
       "passwordHash": "pbkdf2$120000$de5cdc681777c10c9b2bcfbc27596aa4$30b638ff825989f47d1482d8f63a01471ced331e83ae8de7f5c41cf20ec6c587",
       "role": "business",
       "createdAt": "2026-03-04T10:35:41.309Z"
+    },
+    {
+      "id": 16,
+      "email": "fyregereb@mailinator.com",
+      "passwordHash": "pbkdf2$120000$a164919184aa7c29322cd2a756178663$fb97ab379dfdb00e03e7ae7cd11e6f7b8f46c5292ab7f32db522f22e38686137",
+      "role": "business",
+      "createdAt": "2026-03-10T18:32:31.834Z"
     }
   ],
   "bloggerProfiles": {
@@ -64,6 +71,16 @@
       "budgetMax": 100000000,
       "description": "Men kopaniyamda dasturchi yetishib chiqadi",
       "updatedAt": "2026-03-04T10:35:43.208Z"
+    },
+    "16": {
+      "userId": 16,
+      "companyName": "Watkins and Hewitt Co",
+      "email": "fyregereb@mailinator.com",
+      "niche": "Deserunt tempora par",
+      "budgetMin": 100000,
+      "budgetMax": 1000000,
+      "description": "Quis voluptatem repr",
+      "updatedAt": "2026-03-10T18:32:33.380Z"
     }
   },
   "campaigns": [],
